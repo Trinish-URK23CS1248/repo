@@ -19,6 +19,8 @@ Open http://localhost:8080, paste the password, install suggested plugins, then 
 docker exec -u root jenkins bash -c \
   "apt-get update && apt-get install -y docker.io"
 
+docker exec -u root jenkins bash -c "chmod 666 /var/run/docker.sock"
+
 #Step 3 – Jenkinsfile (place in root of GitHub repo)
 Groovy
 pipeline {
