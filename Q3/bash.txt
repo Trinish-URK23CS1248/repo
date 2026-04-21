@@ -2,9 +2,10 @@ pip install flask
 python app.py
 
 # Add a student
-curl -X POST http://localhost:5000/students \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Alice","roll":"CS001"}'
+Invoke-RestMethod -Uri "http://localhost:5000/students" `
+  -Method POST `
+  -Headers @{ "Content-Type" = "application/json" } `
+  -Body '{"name":"Alice","roll":"CS001"}'
 
 # List all students
 curl http://localhost:5000/students
