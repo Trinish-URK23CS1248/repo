@@ -1,0 +1,6 @@
+Create a GitHub Actions pipeline to automatically build and push a Docker image of a Python app to Docker Hub.
+GitHub Actions
+Docker
+Python
+
+Uses the official docker/build-push-action for best-practice multi-platform builds with Docker Buildx.

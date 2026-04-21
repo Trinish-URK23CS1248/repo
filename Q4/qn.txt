@@ -1,0 +1,4 @@
+Create a CI pipeline using GitHub Actions to build and push a Docker image of a Python app to Docker Hub.
+GitHub Actions
+Docker
+Python

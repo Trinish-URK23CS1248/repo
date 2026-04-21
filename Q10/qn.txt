@@ -1,0 +1,4 @@
+Configure a GitHub Actions workflow to automatically build and test a Python application.
+GitHub Actions
+Python
+pytest

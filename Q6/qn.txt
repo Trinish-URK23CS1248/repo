@@ -1,0 +1,3 @@
+Use kubectl commands to create, scale, and manage Kubernetes resources like pods and deployments.
+Kubernetes
+kubectl

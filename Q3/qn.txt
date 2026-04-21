@@ -1,0 +1,6 @@
+Develop and demonstrate a simple monolithic application model using Python or Flask.
+Python
+Flask
+
+📖
+A monolithic app bundles all features — UI, business logic, and data — into a single deployable unit. Below is a Student CRUD REST API in Flask.
