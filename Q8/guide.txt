@@ -1,0 +1,78 @@
+Experiment: Service Account Authentication with Compute Viewer Role
+🎯 Aim
+
+To create a Service Account with Compute Viewer role and attach it to a Compute Engine VM for secure service-to-service authentication.
+
+📘 Description
+
+A Service Account is a special Google Cloud identity used by applications or VMs instead of human users.
+
+Used for:
+Secure API access
+Automation
+Internal service communication
+
+👉 Compute Viewer Role allows:
+
+Viewing Compute Engine resources
+No modification permissions
+
+👉 In this experiment:
+
+Service account is created
+Role is assigned
+Attached to VM for secure access
+⚙️ Step-by-Step Procedure (GCP Console)
+🔹 Step 1: Open Service Accounts Page
+Go to: https://console.cloud.google.com
+Navigation Menu (☰) → IAM & Admin → Service Accounts
+🔹 Step 2: Create Service Account
+Click Create Service Account
+
+Fill details:
+
+Name: compute-viewer-sa
+ID: auto-generated
+Click Create and Continue
+🔹 Step 3: Assign Role
+Click Select a Role
+Choose:
+Compute Engine → Compute Viewer
+
+👉 This gives read-only access to VM resources
+
+Click Continue → Done
+🔹 Step 4: Create VM and Attach Service Account
+Go to Compute Engine → VM Instances
+Click Create Instance
+
+Fill details:
+
+Name: sa-vm
+Region/Zone: default
+Machine type: e2-micro
+🔐 Attach Service Account
+Scroll to Identity and API Access
+Under Service Account, select:
+👉 compute-viewer-sa
+Click Create
+🔹 Step 5: Verify Service Account Access
+
+SSH into VM:
+
+gcloud compute ssh sa-vm
+
+Run:
+
+gcloud compute instances list
+
+✔ It should display VM instances
+✔ Confirms Compute Viewer access is working
+
+🧪 Observations
+Service account created successfully
+Compute Viewer role assigned
+VM accessed Compute Engine resources without user credentials
+📊 Result
+
+Successfully created a Service Account with Compute Viewer role and attached it to a VM, enabling secure service-to-service authentication.
