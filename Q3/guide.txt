@@ -1,0 +1,74 @@
+Experiment: Creating Cloud Storage Bucket & Lifecycle Management
+🎯 Aim
+
+To create a Cloud Storage bucket, upload objects, and configure a lifecycle rule to automatically change the storage class from Standard to Nearline after 30 days.
+
+📘 Description
+
+Cloud Storage is an object storage service in Google Cloud used to store files like images, videos, backups, etc.
+
+Standard Storage → Frequently accessed data
+Nearline Storage → Infrequently accessed (cheaper)
+Lifecycle Management → Automatically manages objects based on rules (age, type, etc.)
+
+👉 In this experiment:
+
+Bucket is created
+Files are uploaded
+Lifecycle rule moves data to Nearline after 30 days
+⚙️ Step-by-Step Procedure (GCP Console)
+🔹 Step 1: Open Cloud Storage
+Go to https://console.cloud.google.com
+Navigation Menu (☰) → Cloud Storage → Buckets
+🔹 Step 2: Create a Bucket
+Click Create Bucket
+
+Fill details:
+
+Name: my-storage-bucket-123 (must be globally unique)
+Region: Choose (e.g., us-central1)
+Storage Class: Standard
+
+👉 Leave other settings as default
+
+Click Create
+🔹 Step 3: Upload Object
+Open your bucket
+Click Upload Files
+Select any file (PDF, image, etc.)
+
+✔ File will be uploaded successfully
+
+🔹 Step 4: Configure Lifecycle Rule
+Inside the bucket, go to Lifecycle tab
+Click Add Rule
+Rule Configuration:
+✅ Condition:
+Select Age
+Enter: 30 days
+✅ Action:
+Select Set storage class
+Choose: Nearline
+Click Create
+🔹 Step 5: Verify Lifecycle Rule
+Go to Lifecycle tab
+Confirm rule is listed:
+Age: 30 days
+Action: Change to Nearline
+🔹 (Optional) Step 6: Using gcloud Command (CLI Method)
+
+Create bucket:
+
+gsutil mb -c standard -l us-central1 gs://my-storage-bucket-123
+
+Upload file:
+
+gsutil cp file.txt gs://my-storage-bucket-123
+🧪 Observations
+Bucket created successfully
+File uploaded
+Lifecycle rule configured
+Objects will automatically move to Nearline after 30 days
+📊 Result
+
+Successfully created a Cloud Storage bucket, uploaded objects, and configured a lifecycle policy to transition storage class from Standard to Nearline after 30 days.
