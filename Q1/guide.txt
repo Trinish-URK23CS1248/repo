@@ -1,0 +1,87 @@
+Experiment: VPC Networking (Custom Mode with Multi-Region Subnets)
+🎯 Aim
+
+To design and configure a Custom Mode Virtual Private Cloud (VPC) in Google Cloud by creating subnets in multiple regions (us-central1 and asia-east1) to enable multi-region networking and test connectivity between virtual machines.
+
+📘 Description
+
+A Virtual Private Cloud (VPC) is a global virtual network in Google Cloud that allows communication between resources like VM instances, Kubernetes clusters, and applications.
+
+VPC is global, but subnets are regional
+Custom mode VPC gives full control over:
+IP ranges
+Regions
+Subnet creation
+Enables secure and scalable multi-region architecture
+
+In this experiment:
+
+Default network is removed
+A custom VPC is created
+Subnets are defined manually in different regions
+Firewall rules are configured
+VM instances are deployed and tested
+⚙️ Procedure
+Step 1: Delete Default Network
+Go to VPC Network → VPC Networks
+Select default
+Delete firewall rules
+Delete the VPC network
+
+👉 Reason: Clean setup for custom configuration
+
+Step 2: Create Custom Mode VPC
+Click Create VPC Network
+Name: custom-vpc
+Select Custom subnet mode
+Step 3: Create Subnets (Multi-Region)
+🌍 Subnet 1 (us-central1)
+Name: subnet-us
+Region: us-central1
+IP Range: 10.0.0.0/24
+🌏 Subnet 2 (asia-east1)
+Name: subnet-asia
+Region: asia-east1
+IP Range: 10.0.1.0/24
+Step 4: Configure Firewall Rules
+
+Go to VPC → Firewall → Create Rule
+
+Allow:
+
+SSH → TCP:22
+RDP → TCP:3389
+ICMP (ping)
+
+Settings:
+
+Direction: Ingress
+Source: 0.0.0.0/0
+Step 5: Create VM Instances
+VM 1 (US Region)
+Name: vm-us
+Region: us-central1
+Subnet: subnet-us
+VM 2 (Asia Region)
+Name: vm-asia
+Region: asia-east1
+Subnet: subnet-asia
+Step 6: Test Connectivity
+✅ External IP Test
+ping <external-ip>
+
+✔ Works (via internet)
+
+✅ Internal IP Test
+ping <internal-ip>
+
+✔ Works (same VPC)
+
+🧪 Observations
+VM instances in different regions can communicate internally
+Communication works because:
+Same VPC network
+Proper firewall rules
+📊 Result
+
+Successfully created a Custom Mode VPC with subnets in multiple regions and verified connectivity between virtual machines.
