@@ -1,0 +1,102 @@
+Experiment: Implementing Cloud SQL (MySQL)
+🎯 Aim
+
+To deploy a managed Cloud SQL (MySQL) instance and configure database settings to support a scalable and reliable application backend.
+
+📘 Description
+
+Cloud SQL is a fully managed relational database service in Google Cloud.
+
+Supports MySQL, PostgreSQL, SQL Server
+Handles:
+Backups
+Replication
+Scaling
+Maintenance automatically
+
+👉 In this experiment:
+
+A MySQL instance is created
+Database is configured
+Connectivity is enabled for application use
+⚙️ Step-by-Step Procedure (GCP Console)
+🔹 Step 1: Open Cloud SQL
+Go to: https://console.cloud.google.com
+Navigation Menu (☰) → SQL
+Click Create Instance
+🔹 Step 2: Choose Database Engine
+Select MySQL
+Click Next
+🔹 Step 3: Configure Instance
+
+Fill details:
+
+Instance ID: my-sql-instance
+Password: Set a strong password
+Region: us-central1 (or given)
+⚙️ Machine Configuration
+Choose Development / Small instance
+Machine type: db-f1-micro or db-g1-small
+💾 Storage Settings
+Enable:
+✅ Automatic storage increase
+
+👉 This ensures scalability
+
+🔒 Connections Settings
+Under Connectivity:
+Enable Public IP (for lab/testing)
+OR use Private IP (advanced)
+🔐 Authorized Networks
+Add your IP:
+Click Add Network
+Name: my-ip
+Value: 0.0.0.0/0 (for lab purpose only)
+♻️ Backups & High Availability
+Enable:
+✅ Automated backups
+
+👉 Ensures reliability
+
+🔹 Step 4: Create Instance
+Click Create
+Wait ~2–5 minutes
+🔹 Step 5: Create Database
+Open your instance
+Go to Databases tab
+Click Create Database
+
+Enter:
+
+Database name: mydatabase
+
+Click Create
+
+🔹 Step 6: Connect to Database
+Option 1: Using Cloud Shell
+gcloud sql connect my-sql-instance --user=root
+
+👉 Enter password
+
+Option 2: Run SQL Commands
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+INSERT INTO users VALUES (1, 'Arun');
+
+SELECT * FROM users;
+🔹 Step 7: Verify Setup
+
+✔ Instance running
+✔ Database created
+✔ Table inserted and retrieved
+
+🧪 Observations
+Cloud SQL instance deployed successfully
+Database created and accessed
+Backup and scaling options enabled
+📊 Result
+
+Successfully implemented a Cloud SQL MySQL instance and configured it for scalable and reliable data storage.
