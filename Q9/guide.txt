@@ -1,0 +1,74 @@
+Experiment: Folder-Level IAM and Policy Inheritance
+🎯 Aim
+
+To create a Folder in Google Cloud and assign IAM roles at the folder level to understand policy inheritance across projects.
+
+📘 Description
+
+Google Cloud resources follow a hierarchy:
+
+👉 Organization → Folder → Project → Resources
+
+IAM roles assigned at higher levels are inherited downward
+This is called policy inheritance
+
+👉 Example:
+
+Role assigned at folder level → applies to all projects inside it
+
+In this experiment:
+
+A folder is created
+IAM role is assigned at folder level
+Access is inherited by projects
+⚙️ Step-by-Step Procedure (GCP Console)
+🔹 Step 1: Open Resource Manager
+Go to: https://console.cloud.google.com
+Navigation Menu (☰) → IAM & Admin → Manage Resources
+🔹 Step 2: Create Folder
+Click Create Folder
+Enter:
+Name: test-folder
+Organization: Select your organization
+Click Create
+🔹 Step 3: Create / Move Project into Folder
+Option A: Create New Project
+Click Create Project
+Enter:
+Project Name: test-project
+Location: Select test-folder
+Click Create
+Option B: Move Existing Project
+Select project
+Click Move
+Choose test-folder
+🔹 Step 4: Assign IAM Role at Folder Level
+Click on test-folder
+Go to Permissions tab
+Click Grant Access
+
+Enter:
+
+Principal: testuser@gmail.com
+Role: Viewer (or any role like Storage Viewer)
+Click Save
+🔹 Step 5: Verify Policy Inheritance
+Open the project inside the folder
+Go to IAM & Admin → IAM
+
+✔ You will see:
+
+The same user (testuser@gmail.com)
+Role inherited from folder
+
+👉 It may show as:
+“Inherited from test-folder”
+
+🧪 Observations
+Folder created successfully
+IAM role assigned at folder level
+Role automatically applied to project
+No need to assign roles individually
+📊 Result
+
+Successfully created a folder and assigned IAM roles, demonstrating policy inheritance across projects.
