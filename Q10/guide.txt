@@ -1,0 +1,119 @@
+Experiment: HTTP(S) Load Balancer with Cloud Armor
+🎯 Aim
+
+To deploy an HTTP(S) Load Balancer and configure a Cloud Armor security policy to protect backend services from unauthorized access.
+
+📘 Description
+
+An HTTP(S) Load Balancer distributes incoming traffic across multiple backend VM instances.
+
+Ensures:
+High availability
+Scalability
+Fault tolerance
+
+Cloud Armor provides:
+
+DDoS protection
+IP-based filtering
+Security policies for backend services
+
+👉 In this experiment:
+
+Backend VMs are created using a MIG
+Load balancer is configured
+Cloud Armor policy is applied
+⚙️ Step-by-Step Procedure (GCP Console)
+🔹 Step 1: Create Instance Template
+Go to Compute Engine → Instance Templates
+Click Create Instance Template
+
+Fill details:
+
+Name: lb-template
+Machine type: e2-micro
+🔧 Add Startup Script
+#!/bin/bash
+apt-get update
+apt-get install -y apache2
+systemctl start apache2
+echo "<h1>Load Balanced Server</h1>" > /var/www/html/index.html
+🌐 Allow HTTP
+Tick:
+✅ Allow HTTP traffic
+Click Create
+🔹 Step 2: Create Managed Instance Group (MIG)
+Go to Compute Engine → Instance Groups
+Click Create Instance Group
+
+Fill:
+
+Name: lb-mig
+Instance template: lb-template
+Zone: us-central1-a
+Number of instances: 2
+
+👉 Enable autoscaling (optional but recommended)
+
+Click Create
+🔹 Step 3: Create HTTP Load Balancer
+Go to Network Services → Load Balancing
+Click Create Load Balancer
+Choose:
+👉 HTTP(S) Load Balancing → Start Configuration
+🔹 Configure Backend
+Click Backend Configuration
+Create backend service:
+Add Instance Group (lb-mig)
+Set port: 80
+🔹 Configure Health Check
+Create health check:
+Protocol: HTTP
+Port: 80
+🔹 Configure Frontend
+Protocol: HTTP
+Port: 80
+IP: Ephemeral
+🔹 Review & Create
+Click Create
+🔹 Step 4: Create Cloud Armor Security Policy
+Go to Security → Cloud Armor
+Click Create Policy
+
+Fill:
+
+Name: security-policy
+Default action: Allow
+🔐 Add Rule
+Add rule:
+Priority: 1000
+Action: Deny
+Source IP: (example) 1.2.3.4/32 (or test IP)
+Click Create
+🔹 Step 5: Attach Cloud Armor to Backend
+Go to Load Balancer → Backend Service
+Edit backend
+Under Security Policy:
+Select security-policy
+Save
+🔹 Step 6: Verify Load Balancer
+Copy Load Balancer External IP
+Open browser:
+http://<load-balancer-ip>
+
+✔ You should see:
+👉 Load Balanced Server
+
+🔹 Step 7: Test Security Policy
+Try accessing from blocked IP
+❌ Access denied
+
+✔ Cloud Armor working
+
+🧪 Observations
+Traffic distributed across multiple VMs
+Load balancer working successfully
+Cloud Armor blocking unauthorized access
+📊 Result
+
+Successfully deployed an HTTP Load Balancer and secured backend services using Cloud Armor security policies.
