@@ -1,0 +1,67 @@
+Exploring IAM – Creating User & Assigning Role
+🎯 Aim
+
+To create a Test User in IAM and assign the Storage Object Viewer role for a specific Cloud Storage bucket.
+
+📘 Description
+
+Identity and Access Management (IAM) controls who (users) can do what (roles) on which resources.
+
+User → Identity (email)
+Role → Permissions (viewer, editor, etc.)
+Policy → Binding between user + role
+
+👉 In this experiment:
+
+A new user is created
+Access is restricted to only view objects in a specific bucket
+⚙️ Step-by-Step Procedure (GCP Console)
+🔹 Step 1: Open IAM Page
+Go to: https://console.cloud.google.com
+Navigation Menu (☰) → IAM & Admin → IAM
+🔹 Step 2: Add Test User
+Click Grant Access
+Enter:
+New Principal (Email): testuser@gmail.com (or given email)
+🔹 Step 3: Assign Role
+Click Select a role
+Navigate:
+Cloud Storage → Storage Object Viewer
+
+👉 This role allows:
+
+View objects
+Read data
+No editing/deleting
+🔹 Step 4: Restrict Access to Specific Bucket (Important)
+
+👉 Instead of giving project-wide access, assign at bucket level:
+
+Go to Cloud Storage → Buckets
+Click your bucket (e.g., my-storage-bucket-123)
+Go to Permissions tab
+Click Grant Access
+
+Enter:
+
+Principal: testuser@gmail.com
+Role: Storage Object Viewer
+Click Save
+🔹 Step 5: Verify Access
+
+✔ Test user can:
+
+View bucket contents
+Download files
+
+❌ Cannot:
+
+Upload/delete objects
+Modify bucket
+🧪 Observations
+Test user created successfully
+Access restricted to specific bucket
+Only read permissions granted
+📊 Result
+
+Successfully created a Test User and assigned Storage Object Viewer role with access limited to a specific bucket.
