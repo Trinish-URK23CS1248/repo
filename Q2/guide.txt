@@ -1,0 +1,83 @@
+Experiment: Creating a Compute Engine VM without External IP & Enabling Private Google Access
+🎯 Aim
+
+To create a Compute Engine Virtual Machine without an external IP address and enable Private Google Access on the subnet to securely access Google services without using the public internet.
+
+📘 Description
+
+In Google Cloud, VM instances usually get an external IP for internet access. But for security-focused architectures, we avoid exposing VMs publicly.
+
+No External IP → VM is not accessible from the internet
+Private Google Access → Allows VM to access Google services (like Cloud Storage, APIs) internally
+Ensures:
+Better security 🔒
+Controlled communication
+Reduced attack surface
+
+This setup is commonly used in:
+
+Enterprise systems
+Backend services
+Secure DevOps pipelines
+⚙️ Procedure
+Step 1: Create a Custom VPC Network
+Go to VPC Network → VPC Networks
+Click Create VPC Network
+Name: private-vpc
+Subnet mode: Custom
+Step 2: Create Subnet with Private Google Access
+Add subnet:
+Name: private-subnet
+Region: us-central1 (or any region)
+IP Range: 10.10.0.0/24
+Enable:
+✅ Private Google Access
+
+👉 This is the key step for the experiment
+
+Step 3: Create Firewall Rule (Optional but recommended)
+
+Allow internal communication:
+
+Protocols: ICMP, TCP:22
+Step 4: Create VM without External IP
+Go to Compute Engine → VM Instances
+Click Create Instance
+
+Fill details:
+
+Name: private-vm
+Region: same as subnet
+Machine type: e2-micro
+
+👉 Go to Networking section:
+
+Network: private-vpc
+Subnet: private-subnet
+
+⚠️ Important:
+
+External IP → Select NONE
+Step 5: Connect to VM (Secure Access)
+
+Since no external IP:
+
+Use IAP (Identity-Aware Proxy) OR Cloud Shell
+gcloud compute ssh private-vm --zone=<zone> --tunnel-through-iap
+Step 6: Verify Private Google Access
+
+Inside VM, run:
+
+curl https://www.googleapis.com
+
+✔ If response comes → Private Google Access is working
+✔ No external IP used
+
+🧪 Observations
+VM has no external IP
+Cannot be accessed directly from internet
+Still able to access Google services internally
+Secure communication is achieved
+📊 Result
+
+Successfully created a secure Compute Engine VM without external IP and enabled Private Google Access, allowing internal access to Google services.
