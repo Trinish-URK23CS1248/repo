@@ -1,0 +1,99 @@
+Experiment: Resource Monitoring using Managed Instance Group (MIG) with Autoscaling
+🎯 Aim
+
+To build an Instance Template and deploy a Managed Instance Group (MIG) with an autoscaling policy that triggers scaling at 60% CPU utilization.
+
+📘 Description
+
+A Managed Instance Group (MIG) is used to manage identical VM instances.
+
+Ensures:
+High availability
+Load balancing
+Automatic scaling
+
+👉 Autoscaling automatically adjusts the number of VM instances based on load (CPU usage).
+
+In this experiment:
+
+Instance template is created
+MIG is deployed
+Autoscaling is configured at 60% CPU
+⚙️ Step-by-Step Procedure (GCP Console)
+🔹 Step 1: Create Instance Template
+Go to Navigation Menu (☰) → Compute Engine → Instance Templates
+Click Create Instance Template
+
+Fill details:
+
+Name: web-template
+Machine type: e2-micro
+Region: Global (default)
+
+👉 Under Boot Disk:
+
+Select Debian GNU/Linux 12
+🔧 Add Startup Script (Optional but recommended)
+
+Go to Management → Automation → Startup Script
+
+#!/bin/bash
+apt-get update
+apt-get install -y apache2
+systemctl start apache2
+systemctl enable apache2
+🌐 Firewall
+Tick:
+✅ Allow HTTP traffic
+Click Create
+🔹 Step 2: Create Managed Instance Group (MIG)
+Go to Compute Engine → Instance Groups
+Click Create Instance Group
+
+Fill details:
+
+Name: web-mig
+Location: Single zone (e.g., us-central1-a)
+Instance template: web-template
+🔢 Set Initial Size
+Number of instances: 2
+🔹 Step 3: Configure Autoscaling
+Under Autoscaling, select:
+✅ Enable autoscaling
+Set:
+Minimum instances: 1
+Maximum instances: 5
+Autoscaling metric: CPU utilization
+Target CPU utilization: 60%
+Click Create
+🔹 Step 4: Verify Instance Group
+Open Instance Groups
+Click web-mig
+Check:
+Instances running
+CPU utilization graph
+🔹 Step 5: Test Autoscaling (Optional)
+SSH into one instance
+Generate load:
+sudo apt install stress -y
+stress --cpu 2 --timeout 300
+
+👉 This increases CPU usage
+👉 MIG should automatically add more instances
+
+🔹 Step 6: Monitor Scaling
+Go to Monitoring → Metrics Explorer
+Select:
+Resource: VM Instance
+Metric: CPU utilization
+
+✔ Observe scaling behavior
+
+🧪 Observations
+MIG created with identical instances
+Autoscaling enabled at 60% CPU
+New instances added when load increases
+Instances reduced when load decreases
+📊 Result
+
+Successfully deployed a Managed Instance Group with an autoscaling policy at 60% CPU utilization, ensuring efficient resource management and scalability.
