@@ -19,58 +19,99 @@ This setup is commonly used in:
 Enterprise systems
 Backend services
 Secure DevOps pipelines
+
 ⚙️ Procedure
-Step 1: Create a Custom VPC Network
-Go to VPC Network → VPC Networks
+Step 1: Open Google Cloud Console
+Go to: https://console.cloud.google.com
+Sign in with lab credentials
+Select your project
+🔹 Step 2: Create Custom VPC Network
+Go to Navigation Menu (☰) → VPC Network → VPC Networks
 Click Create VPC Network
+
+Fill details:
+
 Name: private-vpc
-Subnet mode: Custom
-Step 2: Create Subnet with Private Google Access
-Add subnet:
+Subnet creation mode: Select Custom
+🔹 Step 3: Create Subnet & Enable Private Google Access
+Under New Subnet, enter:
 Name: private-subnet
-Region: us-central1 (or any region)
-IP Range: 10.10.0.0/24
-Enable:
+Region: us-central1 (or given region)
+IP range: 10.10.0.0/24
+Scroll down and enable:
 ✅ Private Google Access
+Click Done
+Click Create
+🔹 Step 4: Create Firewall Rule (for SSH via IAP)
+Go to VPC Network → Firewall
+Click Create Firewall Rule
 
-👉 This is the key step for the experiment
+Enter:
 
-Step 3: Create Firewall Rule (Optional but recommended)
+Name: allow-iap-ssh
+Network: private-vpc
+Direction: Ingress
+Action: Allow
 
-Allow internal communication:
+Under Targets:
 
-Protocols: ICMP, TCP:22
-Step 4: Create VM without External IP
-Go to Compute Engine → VM Instances
+Select All instances in the network
+
+Under Source filter:
+
+IPv4 ranges:
+35.235.240.0/20
+
+Under Protocols and ports:
+
+Select Specified protocols
+Tick tcp → enter 22
+Click Create
+🔹 Step 5: Create VM without External IP
+Go to Navigation Menu → Compute Engine → VM Instances
 Click Create Instance
 
 Fill details:
 
 Name: private-vm
-Region: same as subnet
+Region: us-central1
+Zone: us-central1-a
 Machine type: e2-micro
 
-👉 Go to Networking section:
+👉 Click Networking
 
 Network: private-vpc
-Subnet: private-subnet
+Subnetwork: private-subnet
 
 ⚠️ Important:
 
-External IP → Select NONE
-Step 5: Connect to VM (Secure Access)
+Under External IP → Select None
+Click Create
+🔹 Step 6: Connect to VM using IAP
 
-Since no external IP:
+Open Cloud Shell (top right terminal icon)
 
-Use IAP (Identity-Aware Proxy) OR Cloud Shell
-gcloud compute ssh private-vm --zone=<zone> --tunnel-through-iap
-Step 6: Verify Private Google Access
+Run:
+
+gcloud compute ssh private-vm --zone=us-central1-a --tunnel-through-iap
+
+👉 Type Y if prompted
+
+🔹 Step 7: Verify Private Google Access
 
 Inside VM, run:
 
 curl https://www.googleapis.com
 
-✔ If response comes → Private Google Access is working
+✔ If output appears → success
+✔ Confirms access without external IP
+
+🔹 Step 8: (Optional Check)
+
+Check VM details:
+
+No External IP assigned
+Only Internal IP present✔ If response comes → Private Google Access is working
 ✔ No external IP used
 
 🧪 Observations
