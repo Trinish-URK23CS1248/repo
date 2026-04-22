@@ -1,0 +1,82 @@
+Experiment: Cloud Monitoring – VM with Startup Script (Apache Setup)
+🎯 Aim
+
+To launch a Compute Engine Virtual Machine and automate software installation by configuring a startup script to update packages and install the Apache web server.
+
+📘 Description
+
+Startup scripts in Google Cloud allow automatic execution of commands when a VM starts.
+
+Used for:
+Installing software
+Configuring environments
+Automating deployment
+
+👉 In this experiment:
+
+VM is created
+Startup script runs automatically
+Apache web server is installed
+Web page is hosted
+⚙️ Step-by-Step Procedure (GCP Console)
+🔹 Step 1: Open Compute Engine
+Go to: https://console.cloud.google.com
+Navigation Menu (☰) → Compute Engine → VM Instances
+Click Create Instance
+🔹 Step 2: Configure VM
+
+Fill details:
+
+Name: apache-vm
+Region: us-central1
+Zone: us-central1-a
+Machine type: e2-micro
+🔹 Step 3: Add Firewall Rule (HTTP Access)
+
+👉 In Networking section:
+
+Tick:
+✅ Allow HTTP traffic
+
+(This automatically allows port 80)
+
+🔹 Step 4: Add Startup Script
+
+Scroll to Management → Automation → Startup script
+
+Paste this 👇
+
+#!/bin/bash
+apt-get update
+apt-get install -y apache2
+systemctl start apache2
+systemctl enable apache2
+echo "<h1>Welcome to Apache Server on GCP</h1>" > /var/www/html/index.html
+🔹 Step 5: Create VM
+Click Create
+Wait for VM to start
+
+👉 Startup script runs automatically in background
+
+🔹 Step 6: Verify Apache Installation
+Go to VM Instances
+Copy the External IP
+Open browser and paste:
+http://<external-ip>
+
+✔ You should see:
+👉 Welcome to Apache Server on GCP
+
+🔹 Step 7: (Optional) Verify via SSH
+sudo systemctl status apache2
+
+✔ Should show active (running)
+
+🧪 Observations
+VM created successfully
+Startup script executed automatically
+Apache installed without manual steps
+Web server accessible via browser
+📊 Result
+
+Successfully launched a Compute Engine VM and automated the installation of the Apache web server using a startup script, enabling web hosting.
